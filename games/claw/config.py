@@ -40,6 +40,9 @@ JOYSTICK_DISABLE_PIN = 19
 # pin for coin door signal
 COIN_SIGNAL_PIN = 20
 
+# pin for coin door signal
+COIN_SIGNAL_PIN = 20
+
 # NOTE! This is a workaround because GE does not send max game length time
 # This constant must be set to same value as GE game length
 GE_GAME_LENGTH = 30
