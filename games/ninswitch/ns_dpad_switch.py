@@ -12,3 +12,4 @@ class NSDPadSwitch(Switch):
 
     async def off(self, seat=0):
         self.nsg.dPad(NSDPad.CENTERED)
+        

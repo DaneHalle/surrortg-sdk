@@ -1,5 +1,6 @@
 from surrortg.inputs import Switch
 
+
 class NSSwitch(Switch):
     def __init__(self, nsg1, nsg2, nsg3, nsg4, button, key):
         self.nsg1 = nsg1
@@ -18,7 +19,6 @@ class NSSwitch(Switch):
             self.nsg3.press(self.button)
         elif seat == 3:
             self.nsg4.press(self.button)
-
 
     async def off(self, seat=0):
         if seat == 0:

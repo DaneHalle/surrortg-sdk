@@ -44,13 +44,13 @@ class NinSwitchFourPlayers(Game):
         self.nsg_4 = NSGamepadSerial()
 
         try:
-            # RX -> TXD | GPIO00 (27 - Blue Wire) | TX -> RXD | GPIO01 (28 - Green Wire)
-            SERIAL_1 = serial.Serial('/dev/ttyAMA1', 2000000, timeout=0) 
-            # RX -> TXD | GPIO04 (07 - Blue Wire) | TX -> RXD | GPIO05 (29 - Green Wire)
+            # RX -> TXD | GPIO00 | TX -> RXD | GPIO01 
+            SERIAL_1 = serial.Serial('/dev/ttyAMA1', 2000000, timeout=0)
+            # RX -> TXD | GPIO04 | TX -> RXD | GPIO05 
             SERIAL_2 = serial.Serial('/dev/ttyAMA2', 2000000, timeout=0)
-            # RX -> TXD | GPIO08 (24 - Blue Wire) | TX -> RXD | GPIO09 (21 - Green Wire)
+            # RX -> TXD | GPIO08 | TX -> RXD | GPIO09 
             SERIAL_3 = serial.Serial('/dev/ttyAMA3', 2000000, timeout=0)
-            # RX -> TXD | GPIO12 (32 - Blue Wire) | TX -> RXD | GPIO13 (33 - Green Wire)
+            # RX -> TXD | GPIO12 | TX -> RXD | GPIO13 
             SERIAL_4 = serial.Serial('/dev/ttyAMA4', 2000000, timeout=0)
             logging.info(f"Found ttyAMA1/ttyAMA2/ttyAMA3/ttyAMA4")
         except:
@@ -64,40 +64,94 @@ class NinSwitchFourPlayers(Game):
 
         self.io.register_inputs(
             {
-                "left_joystick": NSJoystick( "Left",
+                "left_joystick": NSJoystick("Left",
                     self.nsg_1.leftXAxis, self.nsg_1.leftYAxis,
                     self.nsg_2.leftXAxis, self.nsg_2.leftYAxis,
                     self.nsg_3.leftXAxis, self.nsg_3.leftYAxis,
                     self.nsg_4.leftXAxis, self.nsg_4.leftYAxis
                 ),
-                "right_joystick": NSJoystick( "Right",
+                "right_joystick": NSJoystick("Right",
                     self.nsg_1.rightXAxis, self.nsg_1.rightYAxis,
                     self.nsg_2.rightXAxis, self.nsg_2.rightYAxis,
                     self.nsg_3.rightXAxis, self.nsg_3.rightYAxis,
                     self.nsg_4.rightXAxis, self.nsg_4.rightYAxis
                 ),
-                "dpad_up": NSDPadSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSDPad.UP, "UP"),
-                "dpad_left": NSDPadSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSDPad.LEFT, "LEFT"),
-                "dpad_right": NSDPadSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSDPad.RIGHT, "RIGHT"),
-                "dpad_down": NSDPadSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSDPad.DOWN, "DOWN"),
-                "Y": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.Y, "Y"),
-                "X": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.X, "X"),
-                "A": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.A, "A"),
-                "B": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.B, "B"),
-                "minus": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.MINUS, "MINUS"),
-                "plus": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.PLUS, "PLUS"),
-                "left_throttle": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.LEFT_THROTTLE, "LEFT_THROTTLE"),
-                "left_trigger": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.LEFT_TRIGGER, "LEFT_TRIGGER"),
-                "right_throttle": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.RIGHT_THROTTLE, "RIGHT_THROTTLE"),
-                "right_trigger": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.RIGHT_TRIGGER, "RIGHT_TRIGGER"),
-                "left_stick": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.LEFT_STICK, "LEFT_STICK"),
-                "right_stick": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.RIGHT_STICK, "RIGHT_STICK"),
+                "dpad_up": NSDPadSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSDPad.UP, "UP"),
+                "dpad_left": NSDPadSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSDPad.LEFT, "LEFT"),
+                "dpad_right": NSDPadSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSDPad.RIGHT, "RIGHT"),
+                "dpad_down": NSDPadSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSDPad.DOWN, "DOWN"),
+                "Y": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.Y, "Y"),
+                "X": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.X, "X"),
+                "A": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.A, "A"),
+                "B": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.B, "B"),
+                "minus": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.MINUS, "MINUS"),
+                "plus": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.PLUS, "PLUS"),
+                "left_throttle": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.LEFT_THROTTLE, "LEFT_THROTTLE"),
+                "left_trigger": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.LEFT_TRIGGER, "LEFT_TRIGGER"),
+                "right_throttle": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.RIGHT_THROTTLE, "RIGHT_THROTTLE"),
+                "right_trigger": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.RIGHT_TRIGGER, "RIGHT_TRIGGER"),
+                "left_stick": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.LEFT_STICK, "LEFT_STICK"),
+                "right_stick": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.RIGHT_STICK, "RIGHT_STICK"),
             },
         )
         self.io.register_inputs(
             {
-                "home": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.HOME, "HOME"),
-                "capture": NSSwitch(self.nsg_1, self.nsg_2, self.nsg_3, self.nsg_4, NSButton.CAPTURE, "CAPTURE"),
+                "home": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.HOME, "HOME"),
+                "capture": NSSwitch(
+                    self.nsg_1, self.nsg_2,
+                    self.nsg_3, self.nsg_4,
+                    NSButton.CAPTURE, "CAPTURE"),
             },
             admin = True,
         )
