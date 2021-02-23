@@ -390,4 +390,3 @@ class NinSwitchIRLKart(Game):
 
 if __name__ == "__main__":
     NinSwitchIRLKart().run()
-    

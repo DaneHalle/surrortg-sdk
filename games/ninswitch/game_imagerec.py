@@ -143,4 +143,3 @@ class NinSwitchImageRecGame(Game):
 
 if __name__ == "__main__":
     NinSwitchImageRecGame().run()
-    

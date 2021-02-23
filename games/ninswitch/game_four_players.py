@@ -44,13 +44,13 @@ class NinSwitchFourPlayers(Game):
         self.nsg_4 = NSGamepadSerial()
 
         try:
-            # RX -> TXD | GPIO00 | TX -> RXD | GPIO01 
+            # RX -> TXD | GPIO00 | TX -> RXD | GPIO01
             SERIAL_1 = serial.Serial('/dev/ttyAMA1', 2000000, timeout=0)
-            # RX -> TXD | GPIO04 | TX -> RXD | GPIO05 
+            # RX -> TXD | GPIO04 | TX -> RXD | GPIO05
             SERIAL_2 = serial.Serial('/dev/ttyAMA2', 2000000, timeout=0)
-            # RX -> TXD | GPIO08 | TX -> RXD | GPIO09 
+            # RX -> TXD | GPIO08 | TX -> RXD | GPIO09
             SERIAL_3 = serial.Serial('/dev/ttyAMA3', 2000000, timeout=0)
-            # RX -> TXD | GPIO12 | TX -> RXD | GPIO13 
+            # RX -> TXD | GPIO12 | TX -> RXD | GPIO13
             SERIAL_4 = serial.Serial('/dev/ttyAMA4', 2000000, timeout=0)
             logging.info(f"Found ttyAMA1/ttyAMA2/ttyAMA3/ttyAMA4")
         except:
@@ -68,14 +68,12 @@ class NinSwitchFourPlayers(Game):
                     self.nsg_1.leftXAxis, self.nsg_1.leftYAxis,
                     self.nsg_2.leftXAxis, self.nsg_2.leftYAxis,
                     self.nsg_3.leftXAxis, self.nsg_3.leftYAxis,
-                    self.nsg_4.leftXAxis, self.nsg_4.leftYAxis
-                ),
+                    self.nsg_4.leftXAxis, self.nsg_4.leftYAxis),
                 "right_joystick": NSJoystick("Right",
                     self.nsg_1.rightXAxis, self.nsg_1.rightYAxis,
                     self.nsg_2.rightXAxis, self.nsg_2.rightYAxis,
                     self.nsg_3.rightXAxis, self.nsg_3.rightYAxis,
-                    self.nsg_4.rightXAxis, self.nsg_4.rightYAxis
-                ),
+                    self.nsg_4.rightXAxis, self.nsg_4.rightYAxis),
                 "dpad_up": NSDPadSwitch(
                     self.nsg_1, self.nsg_2,
                     self.nsg_3, self.nsg_4,
@@ -185,6 +183,7 @@ class NinSwitchFourPlayers(Game):
         self.nsg_2.end()
         self.nsg_3.end()
         self.nsg_4.end()
+
 
 if __name__ == "__main__":
     NinSwitchFourPlayers().run()
