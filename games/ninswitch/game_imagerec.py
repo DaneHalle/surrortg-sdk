@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import time
 import cv2
 from pathlib import Path
 from surrortg import Game
@@ -35,20 +34,6 @@ FLAG_PIXELS = [
     ((201, 650), (2, 2, 4)),
 ]
 
-class capture_screen(Switch):
-    def __init__(self, cap):
-        self.cap = cap
-
-    async def on(self, seat=0):
-        current_time = "captured_"+str(int(time.time()*100000))
-        frame = await self.cap.read()
-        cv2.imwrite(f"{SAVE_DIR_PATH}/{current_time}.jpg", frame)
-        logging.info(f"SAVED {current_time}.jpg")
-
-        logging.info(f"\t{seat} | Capturing_Frames down")
-
-    async def off(self, seat=0):
-        logging.info(f"\t{seat} | Capturing_Frames up")
 
 class CaptureScreen(Switch):
     async def on(self, seat=0):
@@ -65,8 +50,6 @@ class CaptureScreen(Switch):
 class NinSwitchImageRecGame(Game):
     async def on_init(self):
         # init controls
-        self.cap = await AsyncVideoCapture.create("/dev/video21")
-
         self.nsg = NSGamepadSerial()
         self.nsg.begin()
         self.io.register_inputs(
@@ -101,12 +84,6 @@ class NinSwitchImageRecGame(Game):
         # init image rec
         self.image_rec_task = asyncio.create_task(self.image_rec_main())
         self.image_rec_task.add_done_callback(self.image_rec_done_cb)
-
-        self.io.register_inputs(
-            {
-                "capture_frame": capture_screen(self.cap),
-            },
-        )
 
         # init frame saving
         logging.info(f"SAVING FRAMES TO {SAVE_DIR_PATH}")
