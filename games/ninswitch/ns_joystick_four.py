@@ -15,10 +15,10 @@ DIRECTION_TO_JOYSTICK_VALS = {
 
 class NSJoystick(Joystick):
     def __init__(self, side,
-                x_axis1, y_axis1,
-                x_axis2, y_axis2,
-                x_axis3, y_axis3,
-                x_axis4, y_axis4):
+                    x_axis1, y_axis1,
+                    x_axis2, y_axis2,
+                    x_axis3, y_axis3,
+                    x_axis4, y_axis4):
         super().__init__()
         self.side = side
         self.x_axis1 = x_axis1
